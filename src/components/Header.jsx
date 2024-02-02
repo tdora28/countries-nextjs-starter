@@ -1,9 +1,9 @@
-import { Button } from "react-bootstrap";
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import Row from "react-bootstrap/Row";
-import { Link } from "react-router-dom";
+import { Button } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import Row from 'react-bootstrap/Row';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
@@ -19,6 +19,9 @@ const Header = () => {
                 </Link>
                 <Link to="/countries">
                   <Button variant="contained">Countries</Button>
+                </Link>
+                <Link to="/favourites">
+                  <Button variant="contained">Favourites</Button>
                 </Link>
               </Nav>
             </Navbar.Collapse>
