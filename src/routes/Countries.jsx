@@ -53,9 +53,9 @@ const Countries = () => {
             <p>No matching country found!</p>
           ) : (
             filteredCountries.map((country) => (
-              <Col key={country.name.official} className="mt-5">
+              <Col key={country.name.common} className="mt-5">
                 <Card className="h-100">
-                  <FavoriteIcon color="red" onClick={() => dispatch(addFavourite(country))} />
+                  <FavoriteIcon onClick={() => dispatch(addFavourite(country))} />
 
                   <Link to={`/countries/${country.name.common}`}>
                     <Card.Img
