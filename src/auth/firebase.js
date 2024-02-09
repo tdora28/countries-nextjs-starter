@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { getFirestore, addDoc, collection } from 'firebase/firestore';
 
 // Web app's Firebase configuration
@@ -23,14 +23,14 @@ const auth = getAuth(app);
 // Firestore is a NoSQL database to store and sync data for client and server-side development
 const db = getFirestore(app);
 
-// This function is used to register a user with an email and password
+// Registers a user with an email and password
 const registerWithEmailAndPassword = async (name, email, password) => {
   try {
-    // This means that we give the user the ability to register with an email and password
+    // Gives the user the ability to register with an email and password
     const res = await createUserWithEmailAndPassword(auth, email, password);
-    // This is the newly created user. It's still not saved in the database and empty
+    // The newly created user. It's still not saved in the database and empty
     const user = res.user;
-    // Here we are returning the user
+    // Adds the user to the database
     await addDoc(collection(db, 'users'), {
       uid: user.uid,
       name,
@@ -41,6 +41,20 @@ const registerWithEmailAndPassword = async (name, email, password) => {
     console.log(error);
     alert(error.message);
   }
+};
+
+export const loginWithEmailAndPassword = async (email, password) => {
+  try {
+    // Gives the user the ability to login with an email and password
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    console.log(error);
+    alert(error.message);
+  }
+};
+
+export const logout = () => {
+  auth.signOut();
 };
 
 export { registerWithEmailAndPassword, auth, db };
