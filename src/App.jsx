@@ -7,6 +7,7 @@ import Countries from './routes/Countries';
 import CountriesSingle from './routes/CountriesSingle';
 import Favourites from './routes/Favourites';
 import Home from './routes/Home';
+import Register from './routes/Register';
 import Root from './routes/Root';
 import { Provider } from 'react-redux';
 import store from './store/store';
@@ -43,6 +44,10 @@ function App() {
         {
           path: '/favourites',
           element: <Favourites />,
+        },
+        {
+          path: '/register',
+          element: <Register />,
         },
       ],
     },

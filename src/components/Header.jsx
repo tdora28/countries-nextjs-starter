@@ -23,6 +23,9 @@ const Header = () => {
                 <Link to="/favourites">
                   <Button variant="contained">Favourites</Button>
                 </Link>
+                <Link to="/register">
+                  <Button variant="contained">Register</Button>
+                </Link>
               </Nav>
             </Navbar.Collapse>
           </Container>
