@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { getFirestore, addDoc, collection } from 'firebase/firestore';
 
 // Web app's Firebase configuration
@@ -54,7 +54,8 @@ export const loginWithEmailAndPassword = async (email, password) => {
 };
 
 export const logout = () => {
-  auth.signOut();
+  signOut(auth);
+  console.log('logging out');
 };
 
 export { registerWithEmailAndPassword, auth, db };
