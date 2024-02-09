@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { initializeCountries } from '../store/countriesSlice';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { addFavourite } from '../store/favouritesSlice';
+import { Link } from 'react-router-dom';
 
 const Countries = () => {
   const dispatch = useDispatch();
@@ -23,10 +24,6 @@ const Countries = () => {
   const loading = useSelector((state) => state.countries.isLoading);
 
   const [search, setSearch] = useState('');
-
-  const handleSearch = (e) => {
-    setSearch(e.target.value);
-  };
 
   const filteredCountries = countriesList.filter((country) => country.name.common.toLowerCase().includes(search.toLowerCase()));
 
@@ -46,7 +43,9 @@ const Countries = () => {
 
   return (
     <>
-      <Form.Control style={{ width: '500px', margin: '0 auto' }} size="lg" type="text" placeholder="Search countries..." onChange={handleSearch} />
+      <Row>
+        <Form.Control style={{ width: '500px', margin: '0 auto' }} type="text" placeholder="Search countries..." aria-label="Search" onChange={(e) => setSearch(e.target.value)} />
+      </Row>
 
       <Container fluid>
         <Row xs={2} md={3} lg={4} className=" g-3">
@@ -57,16 +56,20 @@ const Countries = () => {
               <Col key={country.name.official} className="mt-5">
                 <Card className="h-100">
                   <FavoriteIcon color="red" onClick={() => dispatch(addFavourite(country))} />
-                  <Card.Img
-                    variant="top"
-                    className="rounded h-50"
-                    src={country.flags.png}
-                    style={{
-                      objectFit: 'cover',
-                      minHeight: '200px',
-                      maxHeight: '200px',
-                    }}
-                  />
+
+                  <Link to={`/countries/${country.name.common}`}>
+                    <Card.Img
+                      variant="top"
+                      className="rounded h-50"
+                      src={country.flags.png}
+                      style={{
+                        objectFit: 'cover',
+                        minHeight: '200px',
+                        maxHeight: '200px',
+                      }}
+                    />
+                  </Link>
+
                   <Card.Body className="d-flex flex-column">
                     <Card.Title>{country.name.common}</Card.Title>
                     <Card.Subtitle className="mb-5 text-muted">{country.name.official}</Card.Subtitle>
