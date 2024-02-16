@@ -36,11 +36,9 @@ function App() {
                 <Route index element={<Home />} />
                 <Route path="login" element={<Login />} />
                 <Route path="register" element={<Register />} />
-                <Route element={<ProtectedRoute />}>
-                  <Route path="/countries" element={<Countries />} />
-                  <Route path="/favourites" element={<Favourites />} />
-                  <Route path="/countries/:single" element={<CountriesSingle />} />
-                </Route>
+                <Route path="/countries" element={<ProtectedRoute component={Countries} />} />
+                <Route path="/favourites" element={<ProtectedRoute component={Favourites} />} />
+                <Route path="/countries/:single" element={<ProtectedRoute component={CountriesSingle} />} />
               </Route>
             </Routes>
           </Router>
