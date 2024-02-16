@@ -57,7 +57,7 @@ const Countries = () => {
                 <Card className="h-100">
                   <FavoriteIcon onClick={() => dispatch(addFavourite(country))} />
 
-                  <Link to={`/countries/${country.name.common}`}>
+                  <Link to={`/countries/${country.name.common}`} state={{ country: country }}>
                     <Card.Img
                       variant="top"
                       className="rounded h-50"
