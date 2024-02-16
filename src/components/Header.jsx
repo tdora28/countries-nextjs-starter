@@ -4,9 +4,29 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Row from 'react-bootstrap/Row';
 import { Link } from 'react-router-dom';
-import { logout } from '../auth/firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth, logout } from '../auth/firebase';
 
 const Header = () => {
+  const [user, loading, error] = useAuthState(auth);
+
+  const linksIfLoggedIn = () => {
+    return <Button onClick={logout}>Logout</Button>;
+  };
+
+  const linksIfLoggedOut = () => {
+    return (
+      <>
+        <Link to="/register">
+          <Button variant="contained">Register</Button>
+        </Link>
+        <Link to="/login">
+          <Button variant="contained">Login</Button>
+        </Link>
+      </>
+    );
+  };
+
   return (
     <Container fluid>
       <Row>
@@ -24,14 +44,7 @@ const Header = () => {
                 <Link to="/favourites">
                   <Button variant="contained">Favourites</Button>
                 </Link>
-                <Link to="/register">
-                  <Button variant="contained">Register</Button>
-                </Link>
-                <Link to="/login">
-                  <Button variant="contained">Login</Button>
-                </Link>
-
-                <Button onClick={logout}>Logout</Button>
+                {user ? linksIfLoggedIn() : linksIfLoggedOut()}
               </Nav>
             </Navbar.Collapse>
           </Container>
