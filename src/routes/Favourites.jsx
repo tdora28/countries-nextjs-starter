@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 
+import { Button } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -7,13 +8,13 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { useDispatch, useSelector } from 'react-redux';
 import { initializeCountries } from '../store/countriesSlice';
+import { removeFavourite } from '../store/favouritesSlice.js';
 
 const Favourites = () => {
   const dispatch = useDispatch();
 
   const favourites = useSelector((state) => state.favourites.favourites);
 
-  //   TODO: Implement logic to retrieve favourites later
   useEffect(() => {
     dispatch(initializeCountries());
   }, [dispatch]);
@@ -50,6 +51,7 @@ const Favourites = () => {
                   </ListGroup.Item>
                   <ListGroup.Item>{country.population.toLocaleString()}</ListGroup.Item>
                 </ListGroup>
+                <Button onClick={() => dispatch(removeFavourite(country))}>Remove from Favourites</Button>
               </Card.Body>
             </Card>
           </Col>
