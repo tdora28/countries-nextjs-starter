@@ -8,7 +8,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { useDispatch, useSelector } from 'react-redux';
 import { initializeCountries } from '../store/countriesSlice';
-import { removeFavourite } from '../store/favouritesSlice.js';
+import { removeFavourite, clearFavourites } from '../store/favouritesSlice.js';
 
 const Favourites = () => {
   const dispatch = useDispatch();
@@ -57,6 +57,8 @@ const Favourites = () => {
           </Col>
         ))}
       </Row>
+
+      <Row>{favourites.length > 0 ? <Button onClick={() => dispatch(clearFavourites())}>Clear Favourites</Button> : <h2 style={{ marginTop: '40vh' }}>Collect your favourites here!</h2>}</Row>
     </Container>
   );
 };
