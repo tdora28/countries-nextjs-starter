@@ -11,7 +11,17 @@ const Header = () => {
   const [user, loading, error] = useAuthState(auth);
 
   const linksIfLoggedIn = () => {
-    return <Button onClick={logout}>Logout</Button>;
+    return (
+      <>
+        <Link to="/countries">
+          <Button variant="contained">Countries</Button>
+        </Link>
+        <Link to="/favourites">
+          <Button variant="contained">Favourites</Button>
+        </Link>
+        <Button onClick={logout}>Logout</Button>;
+      </>
+    );
   };
 
   const linksIfLoggedOut = () => {
@@ -37,12 +47,6 @@ const Header = () => {
               <Nav>
                 <Link to="/">
                   <Button variant="contained">Home</Button>
-                </Link>
-                <Link to="/countries">
-                  <Button variant="contained">Countries</Button>
-                </Link>
-                <Link to="/favourites">
-                  <Button variant="contained">Favourites</Button>
                 </Link>
                 {user ? linksIfLoggedIn() : linksIfLoggedOut()}
               </Nav>
