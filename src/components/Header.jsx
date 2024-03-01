@@ -19,7 +19,7 @@ const Header = () => {
         <Link to="/favourites">
           <Button variant="contained">Favourites</Button>
         </Link>
-        <Button onClick={logout}>Logout</Button>;
+        <Button onClick={logout}>Logout</Button>
       </>
     );
   };
