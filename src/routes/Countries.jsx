@@ -1,35 +1,33 @@
 import { useEffect, useState } from 'react';
 
-import { Spinner } from 'react-bootstrap';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { Form, Spinner } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
-import Form from 'react-bootstrap/Form';
 import { useDispatch, useSelector } from 'react-redux';
-import { initializeCountries } from '../store/countriesSlice';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import { addFavourite } from '../store/favouritesSlice';
 import { Link } from 'react-router-dom';
+import { getFavouritesFromSource } from '../auth/firebase';
+import { initializeCountries } from '../store/countriesSlice';
+import { addFavourite, removeFavourite } from '../store/favouritesSlice';
 
 const Countries = () => {
   const dispatch = useDispatch();
 
-  // Old code
-  // const countriesList = [];
-  // const loading = false;
-
   const countriesList = useSelector((state) => state.countries.countries);
+  const favourites = useSelector((state) => state.favourites.favourites);
   const loading = useSelector((state) => state.countries.isLoading);
-
   const [search, setSearch] = useState('');
-
-  const filteredCountries = countriesList.filter((country) => country.name.common.toLowerCase().includes(search.toLowerCase()));
 
   useEffect(() => {
     dispatch(initializeCountries());
+    dispatch(getFavouritesFromSource());
   }, [dispatch]);
+
+  useEffect(() => {}, [search]);
 
   if (loading) {
     return (
@@ -42,58 +40,58 @@ const Countries = () => {
   }
 
   return (
-    <>
+    <Container fluid>
       <Row>
-        <Form.Control style={{ width: '500px', margin: '0 auto' }} type="text" placeholder="Search countries..." aria-label="Search" onChange={(e) => setSearch(e.target.value)} />
+        <Form.Control style={{ width: '18rem' }} type="search" className="me-2 " placeholder="Search for countries" aria-label="Search" onChange={(e) => setSearch(e.target.value)} />
       </Row>
-
-      <Container fluid>
-        <Row xs={2} md={3} lg={4} className=" g-3">
-          {search && filteredCountries.length === 0 ? (
-            <p>No matching country found!</p>
-          ) : (
-            filteredCountries.map((country) => (
-              <Col key={country.name.common} className="mt-5">
-                <Card className="h-100">
-                  <FavoriteIcon onClick={() => dispatch(addFavourite(country))} />
-
-                  <Link to={`/countries/${country.name.common}`} state={{ country: country }}>
-                    <Card.Img
-                      variant="top"
-                      className="rounded h-50"
-                      src={country.flags.png}
-                      style={{
-                        objectFit: 'cover',
-                        minHeight: '200px',
-                        maxHeight: '200px',
-                      }}
-                    />
-                  </Link>
-
-                  <Card.Body className="d-flex flex-column">
-                    <Card.Title>{country.name.common}</Card.Title>
-                    <Card.Subtitle className="mb-5 text-muted">{country.name.official}</Card.Subtitle>
-                    <ListGroup variant="flush" className="flex-grow-1 justify-content-end">
-                      <ListGroup.Item>
-                        <i className="bi bi-translate me-2"></i>
-                        {Object.values(country.languages ?? {}).join(', ')}
-                      </ListGroup.Item>
-                      <ListGroup.Item>
-                        <i className="bi bi-cash-coin me-2"></i>
-                        {Object.values(country.currencies || {})
-                          .map((currency) => currency.name)
-                          .join(', ')}
-                      </ListGroup.Item>
-                      <ListGroup.Item>{country.population.toLocaleString()}</ListGroup.Item>
-                    </ListGroup>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))
-          )}
-        </Row>
-      </Container>
-    </>
+      <Row xs={2} md={3} lg={4} className=" g-3">
+        {countriesList
+          .filter((country) => country.name.common.toLowerCase().includes(search.toLowerCase()))
+          .map((country) => (
+            <Col className="mt-5" key={country.name.common}>
+              <Card className="h-100">
+                {favourites.some((favourite) => favourite === country.name?.common) ? (
+                  <FavoriteBorderIcon onClick={() => dispatch(removeFavourite(country.name.common))} />
+                ) : (
+                  <FavoriteIcon onClick={() => dispatch(addFavourite(country.name.common))} />
+                )}
+                <Link to={`/countries/${country.name.common}`} state={{ country: country }}>
+                  <Card.Img
+                    variant="top"
+                    src={country.flags.svg}
+                    className="rounded h-50"
+                    style={{
+                      objectFit: 'cover',
+                      minHeight: '200px',
+                      maxHeight: '200px',
+                    }}
+                  />
+                </Link>
+                <Card.Body className="d-flex flex-column">
+                  <Card.Title>{country.name.common}</Card.Title>
+                  <Card.Subtitle className="mb-5 text-muted">{country.name.official}</Card.Subtitle>
+                  <ListGroup variant="flush" className="flex-grow-1 justify-content-end">
+                    <ListGroup.Item>
+                      <i className="bi bi-translate me-2"></i>
+                      {Object.values(country.languages ?? {}).join(', ')}
+                    </ListGroup.Item>
+                    <ListGroup.Item>
+                      <i className="bi bi-cash-coin me-2"></i>
+                      {Object.values(country.currencies || {})
+                        .map((currency) => currency.name)
+                        .join(', ')}
+                    </ListGroup.Item>
+                    <ListGroup.Item>
+                      <i className="bi bi-people me-2"></i>
+                      {country.population.toLocaleString()}
+                    </ListGroup.Item>
+                  </ListGroup>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+      </Row>
+    </Container>
   );
 };
 

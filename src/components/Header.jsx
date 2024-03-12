@@ -1,14 +1,33 @@
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Row from 'react-bootstrap/Row';
-import { Link } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, logout } from '../auth/firebase';
+import { Link } from 'react-router-dom';
+import { auth, db, logout } from '../auth/firebase';
 
 const Header = () => {
-  const [user, loading, error] = useAuthState(auth);
+  const [user] = useAuthState(auth);
+
+  const [name, setName] = useState();
+
+  useEffect(() => {
+    const getUserData = async () => {
+      const q = query(collection(db, 'users'), where('uid', '==', user?.uid));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        const name = doc.data().name;
+        setName(name);
+      });
+    };
+
+    if (user) {
+      getUserData();
+    }
+  }, [user]);
 
   const linksIfLoggedIn = () => {
     return (
@@ -17,9 +36,9 @@ const Header = () => {
           <Button variant="contained">Countries</Button>
         </Link>
         <Link to="/favourites">
-          <Button variant="contained">Favourites</Button>
+          <Button variant="contained">{name}'s Favourites</Button>
         </Link>
-        <Button onClick={logout}>Logout</Button>;
+        <Button onClick={logout}>Logout</Button>
       </>
     );
   };
@@ -54,6 +73,7 @@ const Header = () => {
           </Container>
         </Navbar>
       </Row>
+      {/* {name ? `Welcome, ${name}` : 'Welcome, Guest'} */}
     </Container>
   );
 };

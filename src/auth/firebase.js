@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { getFirestore, addDoc, collection } from 'firebase/firestore';
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { addDoc, collection, deleteDoc, getDocs, getFirestore, query, where } from 'firebase/firestore';
+import { getFavourites } from '../store/favouritesSlice';
 
 // Web app's Firebase configuration
 const firebaseConfig = {
@@ -15,22 +16,15 @@ const firebaseConfig = {
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 
-// Here we get access to the authentication methods
-// Auth is a service that allows you to authenticate users using Firebase
+// Here we get access to the project authentication
 const auth = getAuth(app);
-
-// Here we get access to the firestore methods
-// Firestore is a NoSQL database to store and sync data for client and server-side development
+// Here we get access to the project database
 const db = getFirestore(app);
 
-// Registers a user with an email and password
 const registerWithEmailAndPassword = async (name, email, password) => {
   try {
-    // Gives the user the ability to register with an email and password
     const res = await createUserWithEmailAndPassword(auth, email, password);
-    // The newly created user. It's still not saved in the database and empty
     const user = res.user;
-    // Adds the user to the database
     await addDoc(collection(db, 'users'), {
       uid: user.uid,
       name,
@@ -45,7 +39,6 @@ const registerWithEmailAndPassword = async (name, email, password) => {
 
 export const loginWithEmailAndPassword = async (email, password) => {
   try {
-    // Gives the user the ability to login with an email and password
     await signInWithEmailAndPassword(auth, email, password);
   } catch (error) {
     console.log(error);
@@ -54,8 +47,70 @@ export const loginWithEmailAndPassword = async (email, password) => {
 };
 
 export const logout = () => {
-  signOut(auth);
-  console.log('logging out');
+  auth.signOut();
 };
 
-export { registerWithEmailAndPassword, auth, db };
+export const getNameOfUser = async (user) => {
+  if (user) {
+    const q = query(collection(db, 'users'), where('uid', '==', user.uid));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      const name = doc.data().name;
+      console.log('name from getNameOfuser: ', name);
+      return name;
+    });
+  } else {
+    return null;
+  }
+};
+
+export const addFavouriteToFirebase = async (uid, name) => {
+  try {
+    await addDoc(collection(db, `users/${uid}/favourites`), { name });
+    console.log('Favourite added to Firebase database');
+  } catch (err) {
+    console.error('Error adding favourite to Firebase database: ', err);
+  }
+};
+
+export const removeFavouriteFromFirebase = async (uid, name) => {
+  console.log('Name: ', name);
+  try {
+    if (!name) {
+      console.error('Error removing favourite from Firebase database: name parameter is undefined');
+      return;
+    }
+    const q = query(collection(db, `users/${uid}/favourites`), where('name', '==', name));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      deleteDoc(doc.ref);
+      console.log('Favourite removed from Firebase database');
+    });
+  } catch (err) {
+    console.error('Error removing favourite from Firebase database: ', err);
+  }
+};
+
+export const clearFavouritesFromFirebase = async (uid) => {
+  try {
+    const q = query(collection(db, `users/${uid}/favourites`));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      deleteDoc(doc.ref);
+      console.log('Favourites removed from Firebase database');
+    });
+  } catch (err) {
+    console.error('Error removing favourites from Firebase database: ', err);
+  }
+};
+
+export const getFavouritesFromSource = () => async (dispatch) => {
+  const user = auth.currentUser;
+  if (user) {
+    const q = await getDocs(collection(db, `users/${user.uid}/favourites`));
+    const favourites = q.docs.map((doc) => doc.data().name);
+    dispatch(getFavourites(favourites));
+  }
+};
+
+export { auth, db, registerWithEmailAndPassword };
