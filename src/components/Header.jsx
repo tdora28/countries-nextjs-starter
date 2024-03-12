@@ -8,6 +8,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import { Flag } from '@mui/icons-material';
 
 const Header = () => {
   const [user] = useAuthState(auth);
@@ -65,7 +66,9 @@ const Header = () => {
       <Container>
         <Navbar.Brand>
           <Link to="/">
-            <Button variant="info">Countries</Button>
+            <Button variant="dark">
+              <Flag color="light" fontSize="large" />
+            </Button>
           </Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" className="ms-auto justify-content-end" />
