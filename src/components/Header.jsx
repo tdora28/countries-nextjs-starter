@@ -1,13 +1,13 @@
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import Row from 'react-bootstrap/Row';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link } from 'react-router-dom';
 import { auth, db, logout } from '../auth/firebase';
+
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 
 const Header = () => {
   const [user] = useAuthState(auth);
@@ -32,13 +32,17 @@ const Header = () => {
   const linksIfLoggedIn = () => {
     return (
       <>
-        <Link to="/countries">
+        <Link to="/countries" className="m-2">
           <Button variant="contained">Countries</Button>
         </Link>
-        <Link to="/favourites">
+
+        <Link to="/favourites" className="m-2 ">
           <Button variant="contained">{name}'s Favourites</Button>
         </Link>
-        <Button onClick={logout}>Logout</Button>
+
+        <Button variant="primary" onClick={logout} className="m-2 ">
+          Logout
+        </Button>
       </>
     );
   };
@@ -46,35 +50,30 @@ const Header = () => {
   const linksIfLoggedOut = () => {
     return (
       <>
-        <Link to="/register">
-          <Button variant="contained">Register</Button>
+        <Link to="/register" className="m-2">
+          <Button>Register</Button>
         </Link>
-        <Link to="/login">
-          <Button variant="contained">Login</Button>
+        <Link to="/login" className="m-2">
+          <Button variant="secondary">Login</Button>
         </Link>
       </>
     );
   };
 
   return (
-    <Container fluid>
-      <Row>
-        <Navbar bg="light" variant="light">
-          <Container className="justify-content-end">
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav>
-                <Link to="/">
-                  <Button variant="contained">Home</Button>
-                </Link>
-                {user ? linksIfLoggedIn() : linksIfLoggedOut()}
-              </Nav>
-            </Navbar.Collapse>
-          </Container>
-        </Navbar>
-      </Row>
-      {/* {name ? `Welcome, ${name}` : 'Welcome, Guest'} */}
-    </Container>
+    <Navbar expand="lg" bg="light">
+      <Container>
+        <Navbar.Brand>
+          <Link to="/">
+            <Button variant="info">Countries</Button>
+          </Link>
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" className="ms-auto justify-content-end" />
+        <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+          <Nav className="align-items-center">{user ? linksIfLoggedIn() : linksIfLoggedOut()}</Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 };
 
