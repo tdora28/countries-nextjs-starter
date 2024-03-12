@@ -67,7 +67,7 @@ const Header = () => {
         <Navbar.Brand>
           <Link to="/">
             <Button variant="dark">
-              <Flag color="light" fontSize="large" />
+              <Flag sx={{ color: 'white' }} fontSize="medium" />
             </Button>
           </Link>
         </Navbar.Brand>
