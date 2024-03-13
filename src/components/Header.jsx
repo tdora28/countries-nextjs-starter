@@ -62,7 +62,7 @@ const Header = () => {
   };
 
   return (
-    <Navbar expand="lg" bg="light">
+    <Navbar collapseOnSelect expand="md" className="bg-body-tertiary">
       <Container>
         <Navbar.Brand>
           <Link to="/">
@@ -73,7 +73,7 @@ const Header = () => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" className="ms-auto justify-content-end" />
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
-          <Nav className="align-items-center">{user ? linksIfLoggedIn() : linksIfLoggedOut()}</Nav>
+          <Nav className="me-auto align-items-center">{user ? linksIfLoggedIn() : linksIfLoggedOut()}</Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>

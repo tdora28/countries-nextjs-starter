@@ -2,12 +2,15 @@ import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
 import { auth, loginWithEmailAndPassword } from '../auth/firebase';
-import { Button } from 'react-bootstrap';
+
+import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
 
   const login = () => {
@@ -22,14 +25,29 @@ const Login = () => {
   }, [user, loading]);
 
   return (
-    <div>
-      <h1>Login</h1>
+    <Container className="d-flex flex-column align-items-center justify-content-center" style={{ minHeight: 'calc(100vh - 70px)' }}>
+      <h2 className="display-4 text-center">Login</h2>
 
+      {/* 
       <input type="text" value={email} placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-      <input type="password" value={password} placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+      <input type="password" value={password} placeholder="Password" onChange={(e) => setPassword(e.target.value)} /> */}
 
-      <Button onClick={login}>Login</Button>
-    </div>
+      <Container style={{ maxWidth: '500px' }}>
+        <Form.Group className="mb-3" controlId="loginEmail">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control type="email" placeholder="Enter your email address" value={email} onChange={(e) => setEmail(e.target.value)} />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="loginPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control type="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        </Form.Group>
+
+        <Button className="d-block mx-auto" onClick={login}>
+          Login
+        </Button>
+      </Container>
+    </Container>
   );
 };
 
