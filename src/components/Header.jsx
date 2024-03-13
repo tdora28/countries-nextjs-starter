@@ -55,7 +55,7 @@ const Header = () => {
           <Button>Register</Button>
         </Link>
         <Link to="/login" className="m-2">
-          <Button variant="secondary">Login</Button>
+          <Button variant="outline-primary">Login</Button>
         </Link>
       </>
     );
@@ -67,7 +67,7 @@ const Header = () => {
         <Navbar.Brand>
           <Link to="/">
             <Button variant="dark">
-              <Flag sx={{ color: 'white' }} fontSize="medium" />
+              <Flag sx={{ color: 'white' }} fontSize="medium" /> Home
             </Button>
           </Link>
         </Navbar.Brand>
