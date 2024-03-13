@@ -14,6 +14,7 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/Button';
 
 const Countries = () => {
   const dispatch = useDispatch();
@@ -50,24 +51,25 @@ const Countries = () => {
           .filter((country) => country.name.common.toLowerCase().includes(search.toLowerCase()))
           .map((country) => (
             <Col className="mt-5" key={country.name.common}>
-              <Card className="h-100">
-                {favourites.some((favourite) => favourite === country.name?.common) ? (
-                  <FavoriteBorderIcon onClick={() => dispatch(removeFavourite(country.name.common))} />
-                ) : (
-                  <FavoriteIcon onClick={() => dispatch(addFavourite(country.name.common))} />
-                )}
-                <Link to={`/countries/${country.name.common}`} state={{ country: country }}>
-                  <Card.Img
-                    variant="top"
-                    src={country.flags.svg}
-                    className="rounded h-50"
-                    style={{
-                      objectFit: 'cover',
-                      minHeight: '200px',
-                      maxHeight: '200px',
-                    }}
-                  />
-                </Link>
+              <Card className="h-100" border="info" bg="ligth" text="dark">
+                <Card.Header style={{ backgroundColor: '#0dcaf0', color: 'white' }}>
+                  {favourites.some((favourite) => favourite === country.name?.common) ? (
+                    <FavoriteIcon style={{ display: 'block', marginLeft: 'auto', color: 'white' }} onClick={() => dispatch(removeFavourite(country.name.common))} />
+                  ) : (
+                    <FavoriteBorderIcon style={{ display: 'block', marginLeft: 'auto' }} onClick={() => dispatch(addFavourite(country.name.common))} />
+                  )}
+                </Card.Header>
+
+                <Card.Img
+                  variant="top"
+                  src={country.flags.svg}
+                  style={{
+                    objectFit: 'cover',
+                    minHeight: '200px',
+                    maxHeight: '200px',
+                  }}
+                />
+
                 <Card.Body className="d-flex flex-column">
                   <Card.Title>{country.name.common}</Card.Title>
                   <Card.Subtitle className="mb-5 text-muted">{country.name.official}</Card.Subtitle>
@@ -88,6 +90,12 @@ const Countries = () => {
                     </ListGroup.Item>
                   </ListGroup>
                 </Card.Body>
+
+                <Link to={`/countries/${country.name.common}`} state={{ country: country }}>
+                  <Button className="w-100" variant="info">
+                    Read More
+                  </Button>
+                </Link>
               </Card>
             </Col>
           ))}
