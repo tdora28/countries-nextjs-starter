@@ -41,6 +41,8 @@ const Countries = () => {
     );
   }
 
+  console.log(countriesList);
+
   return (
     <Container className="my-5">
       <Row>
@@ -61,19 +63,18 @@ const Countries = () => {
                 </Card.Header>
 
                 <Card.Img
-                  variant="top"
+                  variant="bottom"
                   src={country.flags.svg}
                   style={{
                     objectFit: 'cover',
-                    minHeight: '200px',
-                    maxHeight: '200px',
+                    height: '200px',
                   }}
                 />
 
                 <Card.Body className="d-flex flex-column">
                   <Card.Title>{country.name.common}</Card.Title>
                   <Card.Subtitle className="mb-5 text-muted">{country.name.official}</Card.Subtitle>
-                  <ListGroup variant="flush" className="flex-grow-1 justify-content-end">
+                  {/* <ListGroup variant="flush" className="flex-grow-1 justify-content-end">
                     <ListGroup.Item>
                       <i className="bi bi-translate me-2"></i>
                       {Object.values(country.languages ?? {}).join(', ')}
@@ -88,14 +89,13 @@ const Countries = () => {
                       <i className="bi bi-people me-2"></i>
                       {country.population.toLocaleString()}
                     </ListGroup.Item>
-                  </ListGroup>
+                  </ListGroup> */}
+                  <Link style={{ textDecoration: 'none', marginTop: 'auto' }} to={`/countries/${country.name.common}`} state={{ country: country }}>
+                    <Button className="d-block mx-auto" variant="info">
+                      Read More
+                    </Button>
+                  </Link>
                 </Card.Body>
-
-                <Link to={`/countries/${country.name.common}`} state={{ country: country }}>
-                  <Button className="w-100" variant="info">
-                    Read More
-                  </Button>
-                </Link>
               </Card>
             </Col>
           ))}
