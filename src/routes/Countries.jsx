@@ -41,8 +41,6 @@ const Countries = () => {
     );
   }
 
-  console.log(countriesList);
-
   return (
     <Container className="my-5">
       <Row>

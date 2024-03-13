@@ -11,6 +11,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import Stack from 'react-bootstrap/Stack';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Card from 'react-bootstrap/Card';
+import CountryMap from '../components/CountryMap';
 
 const CountriesSingle = () => {
   const location = useLocation();
@@ -84,6 +85,9 @@ const CountriesSingle = () => {
             </Card.Body>
           </Card>
         )}
+      </Row>
+      <Row>
+        <CountryMap latitude={country.latlng[0]} longitude={country.latlng[1]} />
       </Row>
       <Row>
         <Col>
