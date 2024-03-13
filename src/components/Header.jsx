@@ -73,7 +73,7 @@ const Header = () => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" className="ms-auto justify-content-end" />
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
-          <Nav className="me-auto align-items-center">{user ? linksIfLoggedIn() : linksIfLoggedOut()}</Nav>
+          <Nav className="align-items-center">{user ? linksIfLoggedIn() : linksIfLoggedOut()}</Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
