@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react';
-
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { Form, Spinner } from 'react-bootstrap';
-import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
-import ListGroup from 'react-bootstrap/ListGroup';
-import Row from 'react-bootstrap/Row';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getFavouritesFromSource } from '../auth/firebase';
 import { initializeCountries } from '../store/countriesSlice';
 import { addFavourite, removeFavourite } from '../store/favouritesSlice';
+
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { Spinner } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
+import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Row from 'react-bootstrap/Row';
 
 const Countries = () => {
   const dispatch = useDispatch();
@@ -40,11 +41,11 @@ const Countries = () => {
   }
 
   return (
-    <Container fluid>
+    <Container className="my-5">
       <Row>
-        <Form.Control style={{ width: '18rem' }} type="search" className="me-2 " placeholder="Search for countries" aria-label="Search" onChange={(e) => setSearch(e.target.value)} />
+        <Form.Control className="mx-auto mb-5" style={{ width: '20rem' }} type="search" placeholder="Search for countries..." aria-label="Search" onChange={(e) => setSearch(e.target.value)} />
       </Row>
-      <Row xs={2} md={3} lg={4} className=" g-3">
+      <Row xs={1} sm={2} md={3} lg={4} className="g-3">
         {countriesList
           .filter((country) => country.name.common.toLowerCase().includes(search.toLowerCase()))
           .map((country) => (
