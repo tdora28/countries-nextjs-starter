@@ -28,7 +28,6 @@ const Register = () => {
   // This hook is used to redirect the user to the countries page if they are already logged in
   useEffect(() => {
     if (loading) return;
-    if (user) console.log('user is logged in! ', user);
     if (user) navigate('/countries');
   }, [user, loading]);
 
