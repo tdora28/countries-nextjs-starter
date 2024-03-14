@@ -48,6 +48,7 @@ export const loginWithEmailAndPassword = async (email, password) => {
 
 export const logout = () => {
   auth.signOut();
+  location.reload();
 };
 
 export const getNameOfUser = async (user) => {
