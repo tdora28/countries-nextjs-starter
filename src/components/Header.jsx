@@ -38,7 +38,7 @@ const Header = () => {
         </Link>
 
         <Link to="/favourites" className="m-2 ">
-          <Button variant="contained">{name}'s Favourites</Button>
+          <Button variant="contained">Favourites</Button>
         </Link>
 
         <Button variant="primary" onClick={logout} className="m-2 ">
@@ -64,16 +64,15 @@ const Header = () => {
   return (
     <Navbar collapseOnSelect expand="md" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand>
-          <Link to="/">
-            <Button variant="dark">
-              <Flag sx={{ color: 'white' }} fontSize="medium" /> Home
-            </Button>
-          </Link>
-        </Navbar.Brand>
+        <Navbar.Brand>Welcome, {name}!</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" className="ms-auto justify-content-end" />
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
-          <Nav className="align-items-center">{user ? linksIfLoggedIn() : linksIfLoggedOut()}</Nav>
+          <Nav className="align-items-center">
+            <Link to="/">
+              <Button variant="contained">Home</Button>
+            </Link>
+            {user ? linksIfLoggedIn() : linksIfLoggedOut()}
+          </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
