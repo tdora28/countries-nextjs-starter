@@ -12,6 +12,7 @@ import Stack from 'react-bootstrap/Stack';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Card from 'react-bootstrap/Card';
 import CountryMap from '../components/CountryMap';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 const CountriesSingle = () => {
   const location = useLocation();
@@ -95,10 +96,17 @@ const CountriesSingle = () => {
         <CountryMap latitude={country.latlng[0]} longitude={country.latlng[1]} />
       </Row>
 
-      <Row className="mx-auto" style={{ width: 'max-content' }}>
-        <Button variant="outline-primary" onClick={() => navigate('/countries')}>
-          Back to Countries
-        </Button>
+      <Row>
+        <Col className="d-flex justify-content-center">
+          <ButtonGroup>
+            <Button variant="outline-primary" onClick={() => navigate('/countries')}>
+              Back to Countries
+            </Button>
+            <Button variant="outline-primary" onClick={() => navigate('/favourites')}>
+              Back to Favourites
+            </Button>
+          </ButtonGroup>
+        </Col>
       </Row>
     </Container>
   );
