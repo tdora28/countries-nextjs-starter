@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFavouritesFromSource } from '../auth/firebase';
 import { initializeCountries } from '../store/countriesSlice';
-import { addFavourite, removeFavourite } from '../store/favouritesSlice';
+import { addFavourite, removeFavourite, clearFavourites } from '../store/favouritesSlice';
 import { Link } from 'react-router-dom';
 
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -73,6 +73,15 @@ const Favourites = () => {
             </Col>
           ))
         )}
+      </Row>
+      <Row>
+        <Col className="d-flex justify-content-center my-5">
+          {countriesList.length > 0 && (
+            <Button variant="danger" onClick={() => dispatch(clearFavourites())}>
+              Clear All Favourites
+            </Button>
+          )}
+        </Col>
       </Row>
     </Container>
   );
