@@ -8,12 +8,13 @@ import { addFavourite, removeFavourite } from '../store/favouritesSlice';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Spinner } from 'react-bootstrap';
-import Form from 'react-bootstrap/Form';
+
+import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
 
 const Countries = () => {
   const dispatch = useDispatch();
@@ -28,12 +29,10 @@ const Countries = () => {
     dispatch(getFavouritesFromSource());
   }, [dispatch]);
 
-  useEffect(() => {}, [search]);
-
   if (loading) {
     return (
       <Col className="text-center m-5">
-        <Spinner animation="border" role="status" className="center" variant="info">
+        <Spinner animation="border" as="output" className="center" variant="info">
           <span className="visually-hidden">Loading...</span>
         </Spinner>
       </Col>
@@ -42,9 +41,12 @@ const Countries = () => {
 
   return (
     <Container className="my-5">
+      {/* Search input box */}
       <Row>
         <Form.Control className="mx-auto mb-5" style={{ width: '20rem' }} type="search" placeholder="Search for countries..." aria-label="Search" onChange={(e) => setSearch(e.target.value)} />
       </Row>
+
+      {/* Cards for the countries */}
       <Row xs={1} sm={2} md={3} lg={4} className="g-3">
         {countriesList
           .filter((country) => country.name.common.toLowerCase().includes(search.toLowerCase()))
@@ -71,22 +73,6 @@ const Countries = () => {
                 <Card.Body className="d-flex flex-column">
                   <Card.Title>{country.name.common}</Card.Title>
                   <Card.Subtitle className="mb-5 text-muted">{country.name.official}</Card.Subtitle>
-                  {/* <ListGroup variant="flush" className="flex-grow-1 justify-content-end">
-                    <ListGroup.Item>
-                      <i className="bi bi-translate me-2"></i>
-                      {Object.values(country.languages ?? {}).join(', ')}
-                    </ListGroup.Item>
-                    <ListGroup.Item>
-                      <i className="bi bi-cash-coin me-2"></i>
-                      {Object.values(country.currencies || {})
-                        .map((currency) => currency.name)
-                        .join(', ')}
-                    </ListGroup.Item>
-                    <ListGroup.Item>
-                      <i className="bi bi-people me-2"></i>
-                      {country.population.toLocaleString()}
-                    </ListGroup.Item>
-                  </ListGroup> */}
                   <Link style={{ textDecoration: 'none', marginTop: 'auto' }} to={`/countries/${country.name.common}`} state={{ country: country }}>
                     <Button className="d-block mx-auto" variant="info">
                       Read More

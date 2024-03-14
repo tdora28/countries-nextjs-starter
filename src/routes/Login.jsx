@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
+import { auth, loginWithEmailAndPassword } from '../auth/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
-import { auth, loginWithEmailAndPassword } from '../auth/firebase';
 
-import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 
 const Login = () => {
@@ -20,17 +20,12 @@ const Login = () => {
   // This hook is used to redirect the user to the countries page if they are already logged in
   useEffect(() => {
     if (loading) return;
-    if (user) console.log('user info ', user);
     if (user) navigate('/countries');
   }, [user, loading]);
 
   return (
     <Container className="d-flex flex-column align-items-center justify-content-center" style={{ minHeight: 'calc(100vh - 70px)' }}>
       <h2 className="display-4 text-center">Login</h2>
-
-      {/* 
-      <input type="text" value={email} placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-      <input type="password" value={password} placeholder="Password" onChange={(e) => setPassword(e.target.value)} /> */}
 
       <Container style={{ maxWidth: '500px' }}>
         <Form.Group className="mb-3" controlId="loginEmail">

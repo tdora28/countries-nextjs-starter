@@ -1,8 +1,8 @@
-import { collection, getDocs, query, where } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { auth, db, logout } from '../auth/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link } from 'react-router-dom';
-import { auth, db, logout } from '../auth/firebase';
 
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -12,7 +12,6 @@ import { Flag } from '@mui/icons-material';
 
 const Header = () => {
   const [user] = useAuthState(auth);
-
   const [name, setName] = useState();
 
   useEffect(() => {
