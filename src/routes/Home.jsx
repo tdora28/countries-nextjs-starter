@@ -1,6 +1,7 @@
+import galaxyMap from '../assets/galaxy-map.png';
+
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
-import galaxyMap from '../assets/galaxy-map.png';
 
 const Home = () => {
   return (

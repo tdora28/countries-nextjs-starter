@@ -51,19 +51,6 @@ export const logout = () => {
   location.reload();
 };
 
-export const getNameOfUser = async (user) => {
-  if (user) {
-    const q = query(collection(db, 'users'), where('uid', '==', user.uid));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      const name = doc.data().name;
-      return name;
-    });
-  } else {
-    return null;
-  }
-};
-
 export const addFavouriteToFirebase = async (uid, name) => {
   try {
     await addDoc(collection(db, `users/${uid}/favourites`), { name });
