@@ -1,35 +1,40 @@
-## Begin Countries Application setup...
+# Countries
 
-### Steps:
+## React/Redux Toolkit App
 
-1. Install react-redux and react-redux toolkit
-   Install react-redux and @reduxjs/toolkit using npm or yarn. These libraries will be used to manage the state of your application.
+This project is a React application built with Vite and Redux Toolkit, aimed at providing users with a comprehensive view of countries around the world. It utilizes Firebase for authentication, Firestore for data storage, and integrates with various APIs to fetch country information, weather data, and mapping services.
 
-```shell
-npm install react-redux @reduxjs/toolkit
-```
+### Features
 
-2. Signup for weather api at: https://home.openweathermap.org/users/sign_up
-   Sign up for the OpenWeatherMap API at https://home.openweathermap.org/users/sign_up. You will receive an API key which will be used to fetch weather data. The signup means we have to wait 2 hours for the API key to be available. We will not be using this right away.
+- **User Authentication**: Login and authentication functionalities are provided by Firebase, ensuring secure access to the application.
+- **Country Information**: Users can explore a list of countries fetched from [REST Countries](https://restcountries.com/) and view detailed information about each country.
+- **Weather Information**: Weather data for each country is fetched from OpenWeatherMap API, providing users with current weather conditions.
+- **Mapping Services**: Integrated Google Maps enable users to visualize the location of each country.
+- **Favourites Management**: Logged-in users can save their favourite countries and view them on a dedicated Favourites page. They can also remove countries from their favourites list.
+- **Redux Toolkit**: State management is handled efficiently with Redux Toolkit.
+- **Styling with React Bootstrap**: The application's UI is styled using React Bootstrap, offering responsive and visually appealing components.
 
-**_ We will do this step together _** 3. Set up store, slice and (do api call together - service)
-Set up your Redux store and create a slice for your countries data. In the slice, define actions and reducers to handle the fetching of country data. You can use createAsyncThunk from Redux Toolkit to handle the API call.
+### Technologies Used
 
-4. Test that redux in chrome is showing the empty countries array.
-   Test your Redux setup by checking the Redux DevTools in your browser.
+- Vite
+- React
+- Redux Toolkit
+- Firebase (Authentication)
+- Firestore (Data Storage)
+- REST Countries API
+- OpenWeatherMap API
+- Google Maps API
+- npm
+- React Bootstrap
 
-5. Connect Countries.jsx to store and replace the countriesList and loading with values from redux.
-   In your Countries.jsx component, connect to the Redux store using the useSelector and useDispatch hooks from react-redux. Replace the local countriesList and loading state with values from the Redux store.
+### Installation
 
-6. Use framework component to fetch data and display.
+1. Clone the repository
+2. Install dependencies in the project directory: `npm install`
+3. Create a Firebase project then set up authentication and Firestore according to the Firebase documentation.
+4. Obtain API keys for REST Countries, OpenWeatherMap and Google Maps, and add them to a `.env` file.
+5. Start the development server: `npm run dev`.
 
-7. Create search function for all countries
-   Implement a search function that filters the list of countries based on the user's input. This could be done in the Redux slice or in the component itself, depending on your preference.
+### Acknowledgments
 
-Think about the steps carefully here... which part should we do first and why? Do we map and then filter or filter and then map for example?
-Think of your reason...
-
-8. Create link container and add in link for single page later (suggested wrapping Card.Img)
-   Create a link container component that wraps around each country item. This component should use the Link component from react-router-dom to navigate to a detailed view of the country when clicked. It's suggested to wrap the Card.Img component with this link container.
-
-**_ We will do this step together _** 9. Set up country single.
+This project was developed as an assignment for the React Advanced course (REACT23S) at [Business College Helsinki](https://www.bc.fi/), and it builds on the course material.
