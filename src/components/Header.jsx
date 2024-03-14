@@ -64,7 +64,9 @@ const Header = () => {
   return (
     <Navbar collapseOnSelect expand="md" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand>Welcome, {name}!</Navbar.Brand>
+        <Navbar.Brand>
+          <Flag sx={{ color: 'black' }} fontSize="medium" /> {name ? `Hello, ${name}!` : 'Welcome!'}
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" className="ms-auto justify-content-end" />
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
           <Nav className="align-items-center">
