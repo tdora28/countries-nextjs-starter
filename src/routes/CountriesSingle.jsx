@@ -45,56 +45,60 @@ const CountriesSingle = () => {
   }
 
   return (
-    <Container>
+    <Container className="d-flex flex-column gap-5 my-5">
       <Row>
         <Stack direction="horizontal" gap={4}>
           <Image src={country.flags.svg} style={{ width: '80px' }} />
           <h2 className="display-1">{country.name.common}</h2>
         </Stack>
-
-        <Image thumbnail src={`https://source.unsplash.com/featured/1600x900?${country.capital}`} fluid />
-
-        <ListGroup>
-          <ListGroup.Item>Capital: {country.capital} </ListGroup.Item>
-          <ListGroup.Item>Languages: {Object.values(country.languages ?? {}).join(', ')}</ListGroup.Item>
-          <ListGroup.Item>
-            Currencies:{' '}
-            {Object.values(country.currencies || {})
-              .map((currency) => currency.name)
-              .join(', ')}
-          </ListGroup.Item>
-          <ListGroup.Item>Population: {country.population.toLocaleString()}</ListGroup.Item>
-        </ListGroup>
-
-        {!error && weather && (
-          <Card>
-            <Card.Body>
-              <Container>
-                <Row>
-                  <Col xs={9}>
-                    <p className="display-6">{country.capital}</p>
-                    <p>
-                      <strong>{Math.round(weather.main.temp)}°C</strong> &ndash; {weather.weather[0].description}
-                    </p>
-                  </Col>
-                  <Col xs={3} className="d-flex justify-content-end">
-                    <Image src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} alt={weather.weather[0].description} fluid />
-                  </Col>
-                </Row>
-              </Container>
-            </Card.Body>
-          </Card>
-        )}
       </Row>
-      <Row>
+
+      <Row xs={1} sm={1} md={2}>
+        <Col className="d-flex align-items-stretch">
+          <Image style={{ objectFit: 'cover', objectPosition: 'center' }} thumbnail src={`https://source.unsplash.com/featured/1600x900?${country.capital}`} fluid />
+        </Col>
+        <Col className="d-flex flex-column gap-3 justify-content-between">
+          {!error && weather && (
+            <Card>
+              <Card.Body>
+                <Container>
+                  <Row>
+                    <Col>
+                      <p className="display-6">{country.capital}</p>
+                      <p>
+                        <strong>{Math.round(weather.main.temp)}°C</strong> &ndash; {weather.weather[0].description}
+                      </p>
+                    </Col>
+                    <Col className="d-flex justify-content-end">
+                      <Image src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} alt={weather.weather[0].description} fluid />
+                    </Col>
+                  </Row>
+                </Container>
+              </Card.Body>
+            </Card>
+          )}
+          <ListGroup>
+            <ListGroup.Item>Capital: {country.capital} </ListGroup.Item>
+            <ListGroup.Item>Languages: {Object.values(country.languages ?? {}).join(', ')}</ListGroup.Item>
+            <ListGroup.Item>
+              Currencies:{' '}
+              {Object.values(country.currencies || {})
+                .map((currency) => currency.name)
+                .join(', ')}
+            </ListGroup.Item>
+            <ListGroup.Item>Population: {country.population.toLocaleString()}</ListGroup.Item>
+          </ListGroup>
+        </Col>
+      </Row>
+
+      <Row className="d-block mx-auto" style={{ width: '100%', maxWidth: '800px' }}>
         <CountryMap latitude={country.latlng[0]} longitude={country.latlng[1]} />
       </Row>
-      <Row>
-        <Col>
-          <Button variant="light" onClick={() => navigate('/countries')}>
-            Back to Countries
-          </Button>
-        </Col>
+
+      <Row className="mx-auto" style={{ width: 'max-content' }}>
+        <Button variant="outline-primary" onClick={() => navigate('/countries')}>
+          Back to Countries
+        </Button>
       </Row>
     </Container>
   );
